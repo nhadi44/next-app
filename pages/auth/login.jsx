@@ -1,4 +1,11 @@
 import { useState } from "react";
+import Cookies from "js-cookie";
+import Router from "next/router";
+import { unauthPage } from "../../middlewares/uthorizationPage";
+export const getServerSideProps = async (ctx) => {
+  await unauthPage(ctx);
+  return { props: {} };
+};
 
 const Login = () => {
   const [fields, setFields] = useState({
@@ -26,6 +33,9 @@ const Login = () => {
     const loginRes = await loginReq.json();
     setStatus("success");
     setFields({ email: "", password: "" });
+    Cookies.set("token", loginRes.token);
+
+    Router.push("/posts");
   };
 
   const fieldHandler = (e) => {
