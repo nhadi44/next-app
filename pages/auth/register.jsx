@@ -1,4 +1,10 @@
 import { useState } from "react";
+import { unauthPage } from "../../middlewares/uthorizationPage";
+
+export const getServerSideProps = async (ctx) => {
+  await unauthPage(ctx);
+  return { props: {} };
+};
 
 const Register = () => {
   const [fields, setFields] = useState({
